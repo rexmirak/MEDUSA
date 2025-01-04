@@ -1,0 +1,343 @@
+[
+    {
+        "kill chain phases": "Credential Access", 
+        "description": "Adversaries who have the password hash of a target service account (e.g. SharePoint, MSSQL) may forge Kerberos ticket granting service (TGS) tickets, also known as silver tickets. Kerberos TGS tickets are also known as service tickets.(Citation: ADSecurity Silver Tickets)\n\nSilver tickets are more limited in scope in than golden tickets in that they only enable adversaries to access a particular resource (e.g. MSSQL) and the system that hosts the resource; however, unlike golden tickets, adversaries with the ability to forge silver tickets are able to create TGS tickets without interacting with the Key Distribution Center (KDC), potentially making detection more difficult.(Citation: ADSecurity Detecting Forged Tickets)\n\nPassword hashes for target services may be obtained using [OS Credential Dumping](T1003) or [Kerberoasting](T1558.003).",
+        "network_logs": [
+                            {
+                            "timestamp": "2024-03-27T08:23:14.235Z",
+                            "source_ip": "10.10.12.50",
+                            "destination_ip": "10.10.1.100",
+                            "protocol": "LDAP",
+                            "port": 389,
+                            "payload": "Query: (&(servicePrincipalName=*)(objectClass=user))"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:23:45.892Z",
+                            "source_ip": "10.10.12.50",
+                            "destination_ip": "10.10.1.100",
+                            "protocol": "Kerberos",
+                            "port": 88,
+                            "payload": "TGS-REQ Service: MSSQLSvc/dbserver.company.local:1433"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:24:01.127Z",
+                            "source_ip": "10.10.12.50",
+                            "destination_ip": "10.10.1.25",
+                            "protocol": "SMB",
+                            "port": 445,
+                            "payload": "Authentication: NTLM Request for \\\\dbserver\\admin$"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:24:33.445Z",
+                            "source_ip": "10.10.12.50",
+                            "destination_ip": "10.10.1.25",
+                            "protocol": "MS-SQL",
+                            "port": 1433,
+                            "payload": "Login: NTLM Authentication for MSSQLSVC account"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:25:12.783Z",
+                            "source_ip": "10.10.12.50",
+                            "destination_ip": "10.10.1.25",
+                            "protocol": "MS-SQL",
+                            "port": 1433,
+                            "payload": "TGS Authentication for MSSQLSVC account without prior TGT"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:25:45.129Z",
+                            "source_ip": "10.10.12.50",
+                            "destination_ip": "10.10.1.25",
+                            "protocol": "MS-SQL",
+                            "port": 1433,
+                            "payload": "Successful login with service ticket"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:26:02.445Z",
+                            "source_ip": "10.10.12.50",
+                            "destination_ip": "10.10.1.25",
+                            "protocol": "MS-SQL",
+                            "port": 1433,
+                            "payload": "Query: SELECT name FROM sys.databases"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:26:15.892Z",
+                            "source_ip": "10.10.12.50",
+                            "destination_ip": "10.10.1.25",
+                            "protocol": "MS-SQL",
+                            "port": 1433,
+                            "payload": "Query: SELECT * FROM master.sys.server_principals"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:26:22.341Z",
+                            "source_ip": "10.10.12.50",
+                            "destination_ip": "10.10.1.25",
+                            "protocol": "MS-SQL",
+                            "port": 1433,
+                            "payload": "Backup Database Command Execution"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:26:45.672Z",
+                            "source_ip": "10.10.12.50",
+                            "destination_ip": "10.10.1.25",
+                            "protocol": "MS-SQL",
+                            "port": 1433,
+                            "payload": "Extended stored procedure execution: xp_cmdshell"
+                            }
+                        ]
+    },
+    {
+        "kill chain phases": "Credential Access, Defense Evasion, Persistence", 
+        "description": "Adversaries may use [Patch System Image](T1601.001) to hard code a password in the operating system, thus bypassing of native authentication mechanisms for local accounts on network devices.\n\n[Modify System Image](T1601) may include implanted code to the operating system for network devices to provide access for adversaries using a specific password. The modification includes a specific password which is implanted in the operating system image via the patch. Upon authentication attempts, the inserted code will first check to see if the user input is the password. If so, access is granted. Otherwise, the implanted code will pass the credentials on for verification of potentially valid credentials.(Citation: FireEye - Synful Knock)",
+        "network_logs": [
+                            {
+                            "timestamp": "2024-03-27T08:23:14.235Z",
+                            "source_ip": "192.168.2.100",
+                            "destination_ip": "192.168.1.1",
+                            "protocol": "SSH",
+                            "port": 22,
+                            "payload": "Command: show version"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:23:45.892Z",
+                            "source_ip": "192.168.2.100",
+                            "destination_ip": "192.168.1.1",
+                            "protocol": "SSH",
+                            "port": 22,
+                            "payload": "Command: dir flash:"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:24:01.127Z",
+                            "source_ip": "192.168.2.100",
+                            "destination_ip": "10.0.0.5",
+                            "protocol": "TFTP",
+                            "port": 69,
+                            "payload": "GET ios_image.bin"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:25:33.445Z",
+                            "source_ip": "192.168.2.100",
+                            "destination_ip": "10.0.0.5",
+                            "protocol": "TFTP",
+                            "port": 69,
+                            "payload": "PUT ios_image_modified.bin"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:26:12.783Z",
+                            "source_ip": "192.168.2.100",
+                            "destination_ip": "192.168.1.1",
+                            "protocol": "SSH",
+                            "port": 22,
+                            "payload": "Command: copy tftp: flash:"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:27:45.129Z",
+                            "source_ip": "192.168.2.100",
+                            "destination_ip": "192.168.1.1",
+                            "protocol": "SSH",
+                            "port": 22,
+                            "payload": "Command: verify /md5 flash:ios_image_modified.bin"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:28:02.445Z",
+                            "source_ip": "192.168.2.100",
+                            "destination_ip": "192.168.1.1",
+                            "protocol": "SSH",
+                            "port": 22,
+                            "payload": "Command: conf t; boot system flash:ios_image_modified.bin"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:29:15.892Z",
+                            "source_ip": "192.168.2.100",
+                            "destination_ip": "192.168.1.1",
+                            "protocol": "SSH",
+                            "port": 22,
+                            "payload": "Command: reload"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:35:22.341Z",
+                            "source_ip": "192.168.2.100",
+                            "destination_ip": "192.168.1.1",
+                            "protocol": "TELNET",
+                            "port": 23,
+                            "payload": "Authentication attempt with implanted credentials"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:35:45.672Z",
+                            "source_ip": "192.168.2.100",
+                            "destination_ip": "192.168.1.1",
+                            "protocol": "TELNET",
+                            "port": 23,
+                            "payload": "Successful login bypassing normal authentication"
+                            }
+                        ]
+    },{
+        "kill chain phases": "Persistence", "description": "Adversaries may modify client software binaries to establish persistent access to systems. Client software enables users to access services provided by a server. Common client software types are SSH clients, FTP clients, email clients, and web browsers.\n\nAdversaries may make modifications to client software binaries to carry out malicious tasks when those applications are in use. For example, an adversary may copy source code for the client software, add a backdoor, compile for the target, and replace the legitimate application binary (or support files) with the backdoored one. Since these applications may be routinely executed by the user, the adversary can leverage this for persistent access to the host.",
+        "network_logs": [
+                            {
+                            "timestamp": "2024-03-27T08:23:14.235Z",
+                            "source_ip": "10.10.50.100",
+                            "destination_ip": "192.168.1.25",
+                            "protocol": "HTTPS",
+                            "port": 443,
+                            "payload": "GET /downloads/putty/latest/putty.exe HTTP/1.1 Host: github.com"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:23:45.892Z",
+                            "source_ip": "10.10.50.100",
+                            "destination_ip": "192.168.1.25",
+                            "protocol": "HTTPS",
+                            "port": 443,
+                            "payload": "GET /putty/source/putty.zip HTTP/1.1 Host: github.com"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:24:01.127Z",
+                            "source_ip": "10.10.50.100",
+                            "destination_ip": "10.20.30.40",
+                            "protocol": "HTTPS",
+                            "port": 443,
+                            "payload": "POST /build/compile.php HTTP/1.1 Host: attacker-controlled.com"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:25:33.445Z",
+                            "source_ip": "10.10.50.100",
+                            "destination_ip": "10.20.30.40",
+                            "protocol": "HTTPS",
+                            "port": 443,
+                            "payload": "GET /modified/putty_backdoored.exe HTTP/1.1"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:26:12.783Z",
+                            "source_ip": "10.10.50.100",
+                            "destination_ip": "192.168.1.25",
+                            "protocol": "SMB",
+                            "port": 445,
+                            "payload": "Write File: C:\\Program Files\\PuTTY\\putty.exe"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:27:45.129Z",
+                            "source_ip": "10.10.50.100",
+                            "destination_ip": "10.20.30.40",
+                            "protocol": "HTTPS",
+                            "port": 443,
+                            "payload": "POST /verify/binary_hash.php HTTP/1.1"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:28:02.445Z",
+                            "source_ip": "192.168.1.25",
+                            "destination_ip": "10.20.30.40",
+                            "protocol": "HTTPS",
+                            "port": 443,
+                            "payload": "POST /c2/beacon HTTP/1.1 [User-Agent: PuTTY Release 0.78]"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:29:15.892Z",
+                            "source_ip": "192.168.1.25",
+                            "destination_ip": "10.0.0.100",
+                            "protocol": "SSH",
+                            "port": 22,
+                            "payload": "SSH-2.0-PuTTY_Release_0.78 [Modified Connection Data]"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:30:22.341Z",
+                            "source_ip": "192.168.1.25",
+                            "destination_ip": "10.20.30.40",
+                            "protocol": "HTTPS",
+                            "port": 443,
+                            "payload": "POST /c2/exfil HTTP/1.1 [Data: Encrypted SSH Session Content]"
+                            },
+                            {
+                            "timestamp": "2024-03-27T08:31:45.672Z",
+                            "source_ip": "10.10.50.100",
+                            "destination_ip": "192.168.1.25",
+                            "protocol": "SMB",
+                            "port": 445,
+                            "payload": "Set File Attributes: HIDDEN, SYSTEM"
+                            }
+                        ]
+    },{
+        "kill chain phases": "Defense Evasion, Lateral Movement",
+        "description": "Adversaries may “pass the hash” using stolen password hashes to move laterally within an environment, bypassing normal system access controls. Pass the hash (PtH) is a method of authenticating as a user without having access to the user's cleartext password. This method bypasses standard authentication steps that require a cleartext password, moving directly into the portion of the authentication that uses the password hash.\n\nWhen performing PtH, valid password hashes for the account being used are captured using a [Credential Access](TA0006) technique. Captured hashes are used with PtH to authenticate as that user. Once authenticated, PtH may be used to perform actions on local or remote systems.\n\nAdversaries may also use stolen password hashes to \"overpass the hash.\" Similar to PtH, this involves using a password hash to authenticate as a user but also uses the password hash to create a valid Kerberos ticket. This ticket can then be used to perform [Pass the Ticket](T1550.003) attacks.(Citation: Stealthbits Overpass-the-Hash)",
+        "network_logs": [
+                    {
+                    "timestamp": "2024-03-27T08:23:14.235Z",
+                    "source_ip": "192.168.1.100",
+                    "destination_ip": "192.168.1.10",
+                    "protocol": "SMB",
+                    "port": 445,
+                    "payload": "NTLM Authentication Request User: Administrator"
+                    },
+                    {
+                    "timestamp": "2024-03-27T08:23:45.892Z",
+                    "source_ip": "192.168.1.100",
+                    "destination_ip": "192.168.1.10",
+                    "protocol": "SMB",
+                    "port": 445,
+                    "payload": "Access Request: \\\\192.168.1.10\\admin$"
+                    },
+                    {
+                    "timestamp": "2024-03-27T08:24:01.127Z",
+                    "source_ip": "192.168.1.100",
+                    "destination_ip": "192.168.1.20",
+                    "protocol": "SMB",
+                    "port": 445,
+                    "payload": "NTLM Auth [HASH:NT:b4b9b02e6f09a9bd760f388b67351e2b]"
+                    },
+                    {
+                    "timestamp": "2024-03-27T08:24:33.445Z",
+                    "source_ip": "192.168.1.100",
+                    "destination_ip": "192.168.1.20",
+                    "protocol": "SMB",
+                    "port": 445,
+                    "payload": "Access: \\\\192.168.1.20\\C$ [Success]"
+                    },
+                    {
+                    "timestamp": "2024-03-27T08:25:12.783Z",
+                    "source_ip": "192.168.1.100",
+                    "destination_ip": "192.168.1.5",
+                    "protocol": "Kerberos",
+                    "port": 88,
+                    "payload": "TGT Request User:Administrator"
+                    },
+                    {
+                    "timestamp": "2024-03-27T08:25:45.129Z",
+                    "source_ip": "192.168.1.100",
+                    "destination_ip": "192.168.1.30",
+                    "protocol": "Kerberos",
+                    "port": 88,
+                    "payload": "TGS Request Service: CIFS/fileserver.domain.local"
+                    },
+                    {
+                    "timestamp": "2024-03-27T08:26:02.445Z",
+                    "source_ip": "192.168.1.100",
+                    "destination_ip": "192.168.1.30",
+                    "protocol": "SMB",
+                    "port": 445,
+                    "payload": "Authentication with TGS Ticket"
+                    },
+                    {
+                    "timestamp": "2024-03-27T08:26:15.892Z",
+                    "source_ip": "192.168.1.100",
+                    "destination_ip": "192.168.1.40",
+                    "protocol": "Kerberos",
+                    "port": 88,
+                    "payload": "TGS Request Service: HOST/workstation.domain.local"
+                    },
+                    {
+                    "timestamp": "2024-03-27T08:26:22.341Z",
+                    "source_ip": "192.168.1.100",
+                    "destination_ip": "192.168.1.40",
+                    "protocol": "WinRM",
+                    "port": 5985,
+                    "payload": "Authentication with Kerberos Ticket"
+                    },
+                    {
+                    "timestamp": "2024-03-27T08:26:45.672Z",
+                    "source_ip": "192.168.1.100",
+                    "destination_ip": "192.168.1.40",
+                    "protocol": "WinRM",
+                    "port": 5985,
+                    "payload": "Remote Command Execution [Administrator Context]"
+                    }
+                ]
+    }
+]

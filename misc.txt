@@ -1,0 +1,150 @@
+    # Example query
+  #   TTPquery = [{"kill chain phases": "Reconnaissance, Initial Access", "description": "Adversaries may gather information about the victim's organization that can be used during targeting.\n\nThe first DNS query ( company-name.com IN A) suggests an initial reconnaissance phase where adversaries attempt to gather initial domain name (IDN). This could potentially serve as a domain of interest, which is later followed by additional DNS queries such as those for subdomains (careers.company-name.com IN A).\n\nIn the subsequent HTTP requests, we see the use of different domains for LinkedIn and Facebook in order to attempt to gain access to the company's credentials. The Google search query with a specific keyword may be an effort to identify if the company has been targeted before or if there are publicly available details about them.\n\nThe DNS query (mail.company-name.com IN MX) indicates that the adversary is trying to find out what email addresses have administrative roles within the organization, and this can provide information on potential targets for phishing attacks. This could also help adversaries with gaining initial access through email exploits.\n\nGiven these different types of DNS queries and HTTP requests, it appears that an adversary was attempting to gather a wide range of information about company name, specific personnel, email addresses, and online platforms that may have connections to the company. This gathered information could be used in later phases to attempt to gain initial access through targeted phishing or spear phishing attacks.\n\nThis is consistent with the pattern of activity seen in other publicized cases where adversaries use various techniques for gathering intel on potential targets before attempting to establish a foothold in their systems."}]
+
+  #   TTPquery2=  [
+  # {
+  #    "kill chain phases": "Reconnaissance",
+  #  "description": "Adversaries may send spearphishing messages with a malicious link to elicit sensitive information that can be used during targeting. Spearphishing for information is an attempt to trick targets into divulging information, frequently credentials or other actionable information. Spearphishing for information frequently involves social engineering techniques, such as posing as a source with a reason to collect information (ex: [Establish Accounts](T1585) or [Compromise Accounts](T1586)) and/or sending multiple, seemingly urgent messages.\n\nAll forms of spearphishing are electronically delivered social engineering targeted at a specific individual, company, or industry. In this scenario, the malicious emails contain links generally accompanied by social engineering text to coax the user to actively click or copy and paste a URL into a browser.(Citation: TrendMictro Phishing)(Citation: PCMag FakeLogin) The given website may closely resemble a legitimate site in appearance and have a URL containing elements from the real site. From the fake website, information is gathered in web forms and sent to the attacker. Adversaries may also use information from previous reconnaissance efforts (ex: [Search Open Websites/Domains](T1593) or [Search Victim-Owned Websites](T1594)) to craft persuasive and believable lures."
+  # },{
+  #    "kill chain phases": "Reconnaissance",
+  #  "description": "Adversaries may search websites owned by the victim for information that can be used during targeting. Victim-owned websites may contain a variety of details, including names of departments/divisions, physical locations, and data about key employees such as names, roles, and contact info (ex: [Email Addresses](T1589.002)). These sites may also have details highlighting business operations and relationships.(Citation: Comparitech Leak)\n\nAdversaries may search victim-owned websites to gather actionable information. Information from these sources may reveal opportunities for other forms of reconnaissance (ex: [Phishing for Information](T1598) or [Search Open Technical Databases](T1596)), establishing operational resources (ex: [Establish Accounts](T1585) or [Compromise Accounts](T1586)), and/or initial access (ex: [Trusted Relationship](T1199) or [Phishing](T1566))."
+  # },{
+  #  "kill chain phases": "Resource Development",
+  #  "description": "Adversaries may purchase domains that can be used during targeting. Domain names are the human readable names used to represent one or more IP addresses. They can be purchased or, in some cases, acquired for free.\n\nAdversaries can use purchased domains for a variety of purposes, including for [Phishing](T1566), [Drive-by Compromise](T1189), and Command and Control.(Citation: CISA MSS Sep 2020) Adversaries may choose domains that are similar to legitimate domains, including through use of homoglyphs or use of a different top-level domain (TLD).(Citation: FireEye APT28)(Citation: PaypalScam) Typosquatting may be used to aid in delivery of payloads via [Drive-by Compromise](T1189). Adversaries can also use internationalized domain names (IDNs) to create visually similar lookalike domains for use in operations.(Citation: CISA IDN ST05-016)\n\nDomain registrars each maintain a publicly viewable database that displays contact information for every registered domain. Private WHOIS services display alternative information, such as their own company data, rather than the owner of the domain. Adversaries may use such private WHOIS services to obscure information about who owns a purchased domain. Adversaries may further interrupt efforts to track their infrastructure by using varied registration information and purchasing domains with different domain registrars.(Citation: Mandiant APT1)"
+  #  },{
+  #    "kill chain phases": "Resource Development",
+  #  "description": "Adversaries may put in place resources that are referenced by a link that can be used during targeting. An adversary may rely upon a user clicking a malicious link in order to divulge information (including credentials) or to gain execution, as in [Malicious Link](T1204.001). Links can be used for spearphishing, such as sending an email accompanied by social engineering text to coax the user to actively click or copy and paste a URL into a browser. Prior to a phish for information (as in [Spearphishing Link](T1598.003)) or a phish to gain initial access to a system (as in [Spearphishing Link](T1566.002)), an adversary must set up the resources for a link target for the spearphishing link. \n\nTypically, the resources for a link target will be an HTML page that may include some client-side script such as [JavaScript](T1059.007) to decide what content to serve to the user. Adversaries may clone legitimate sites to serve as the link target, this can include cloning of login pages of legitimate web services or organization login pages in an effort to harvest credentials during [Spearphishing Link](T1598.003).(Citation: Malwarebytes Silent Librarian October 2020)(Citation: Proofpoint TA407 September 2019) Adversaries may also [Upload Malware](T1608.001) and have the link target point to malware for download/execution by the user.\n\nAdversaries may purchase domains similar to legitimate domains (ex: homoglyphs, typosquatting, different top-level domain, etc.) during acquisition of infrastructure ([Domains](T1583.001)) to help facilitate [Malicious Link](T1204.001). Link shortening services can also be employed."
+  # },{
+  #    "kill chain phases": "Collection",
+  #  "description": "Adversaries may target user email to collect sensitive information. Emails may contain sensitive data, including trade secrets or personal information, that can prove valuable to adversaries. Adversaries can collect or forward email from mail servers or clients. "},
+  #  {
+  #     "kill chain phases": "Reconnaissance",
+  #  "description": "Adversaries may gather employee names that can be used during targeting. Employee names be used to derive email addresses as well as to help guide other reconnaissance efforts and/or craft more-believable lures.\n\nAdversaries may easily gather employee names, since they may be readily available and exposed via online or other accessible data sets (ex: [Social Media](T1593.001) or [Search Victim-Owned Websites](T1594)).(Citation: OPM Leak) Gathering this information may reveal opportunities for other forms of reconnaissance (ex: [Search Open Websites/Domains](T1593) or [Phishing for Information](T1598)), establishing operational resources (ex: [Compromise Accounts](T1586)), and/or initial access (ex: [Phishing](T1566) or [Valid Accounts](T1078))."},
+  #  {
+  #     "kill chain phases": "Resource Development",
+  #  "description": "Adversaries may buy, steal, or download software tools that can be used during targeting. Tools can be open or closed source, free or commercial. A tool can be used for malicious purposes by an adversary, but (unlike malware) were not intended to be used for those purposes (ex: [PsExec](S0029)). Tool acquisition can involve the procurement of commercial software licenses, including for red teaming tools such as [Cobalt Strike](S0154). Commercial software may be obtained through purchase, stealing licenses (or licensed copies of the software), or cracking trial versions.(Citation: Recorded Future Beacon 2019)\n\nAdversaries may obtain tools to support their operations, including to support execution of post-compromise behaviors. In addition to freely downloading or purchasing software, adversaries may steal software and/or software licenses from third-party entities (including other adversaries)."}
+  # ]
+
+        
+    example_logs = [
+    {
+        "timestamp": "2024-12-07T08:00:00.123Z",
+        "source_ip": "192.168.1.50",
+        "destination_ip": "203.0.113.100",
+        "protocol": "HTTPS",
+        "port": 443,
+        "payload": "C2 beacon: GET /tasks/update"
+    },
+    {
+        "timestamp": "2024-12-07T08:05:15.456Z",
+        "source_ip": "192.168.1.51",
+        "destination_ip": "192.168.1.10",
+        "protocol": "SMB",
+        "port": 445,
+        "payload": "NTLM authentication attempt for lateral movement"
+    },
+    {
+        "timestamp": "2024-12-07T08:10:30.789Z",
+        "source_ip": "192.168.1.52",
+        "destination_ip": "8.8.8.8",
+        "protocol": "DNS",
+        "port": 53,
+        "payload": "DNS query: exfil.domain.com (suspected data exfiltration)"
+    },
+    {
+        "timestamp": "2024-12-07T08:15:00.321Z",
+        "source_ip": "192.168.1.53",
+        "destination_ip": "203.0.113.50",
+        "protocol": "LDAP",
+        "port": 389,
+        "payload": "Query: (&(objectClass=user)(servicePrincipalName=*))"
+    },
+    {
+        "timestamp": "2024-12-07T08:20:45.654Z",
+        "source_ip": "192.168.1.54",
+        "destination_ip": "10.0.0.5",
+        "protocol": "RDP",
+        "port": 3389,
+        "payload": "Brute-force login detected"
+    },
+    {
+        "timestamp": "2024-12-07T08:25:30.987Z",
+        "source_ip": "192.168.1.55",
+        "destination_ip": "192.168.1.20",
+        "protocol": "HTTP",
+        "port": 80,
+        "payload": "File upload detected: malicious.exe"
+    },
+    {
+        "timestamp": "2024-12-07T08:30:00.567Z",
+        "source_ip": "192.168.1.56",
+        "destination_ip": "203.0.113.30",
+        "protocol": "HTTPS",
+        "port": 443,
+        "payload": "POST request: /report-status (C2 communication)"
+    },
+    {
+        "timestamp": "2024-12-07T08:35:12.890Z",
+        "source_ip": "192.168.1.57",
+        "destination_ip": "192.168.1.25",
+        "protocol": "FTP",
+        "port": 21,
+        "payload": "File exfiltration: database_dump.sql"
+    },
+    {
+        "timestamp": "2024-12-07T08:40:47.123Z",
+        "source_ip": "192.168.1.58",
+        "destination_ip": "192.168.1.30",
+        "protocol": "SSH",
+        "port": 22,
+        "payload": "Failed login attempt (password guessing)"
+    },
+    {
+        "timestamp": "2024-12-07T08:45:02.345Z",
+        "source_ip": "192.168.1.59",
+        "destination_ip": "192.168.1.35",
+        "protocol": "SMB",
+        "port": 445,
+        "payload": "File access: \\\\server\\admin$\\sensitive_data.txt"
+    },
+    {
+        "timestamp": "2024-12-07T08:50:25.678Z",
+        "source_ip": "192.168.1.60",
+        "destination_ip": "192.168.1.40",
+        "protocol": "SNMP",
+        "port": 161,
+        "payload": "SNMP walk: public community string"
+    },
+    {
+        "timestamp": "2024-12-07T08:55:10.234Z",
+        "source_ip": "192.168.1.61",
+        "destination_ip": "203.0.113.40",
+        "protocol": "HTTPS",
+        "port": 443,
+        "payload": "Malware download: /resources/implant.bin"
+    },
+    {
+        "timestamp": "2024-12-07T09:00:33.456Z",
+        "source_ip": "192.168.1.62",
+        "destination_ip": "10.0.0.15",
+        "protocol": "Kerberos",
+        "port": 88,
+        "payload": "TGS-REQ for MSSQLSvc/dbserver.company.local"
+    },
+    {
+        "timestamp": "2024-12-07T09:05:20.567Z",
+        "source_ip": "192.168.1.63",
+        "destination_ip": "10.0.0.20",
+        "protocol": "MS-SQL",
+        "port": 1433,
+        "payload": "Login: NTLM Authentication for database access"
+    },
+    {
+        "timestamp": "2024-12-07T09:10:48.789Z",
+        "source_ip": "192.168.1.64",
+        "destination_ip": "10.0.0.25",
+        "protocol": "HTTP",
+        "port": 80,
+        "payload": "Query: SELECT * FROM master.sys.server_principals"
+    }
+]

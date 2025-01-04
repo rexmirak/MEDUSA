@@ -1,0 +1,24 @@
+# Ignore Python bytecode and cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment
+myenv/
+env/
+venv/
+
+# Ignore data files
+#data/*.json
+
+# Ignore miscellaneous files
+#misc/*.json
+#misc/*.txt
+
+# Ignore system files
+*.log
+.DS_Store
+
+# Ignore requirements backup
+requirements.txt.bak
