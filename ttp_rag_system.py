@@ -5,7 +5,7 @@ import requests
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Global configurations
-SIMILARITY_THRESHOLD = 0.1
+SIMILARITY_THRESHOLD = 0.5
 CHUNK_SIZE = 512  # Adjust based on your needs
 OLLAMA_BASE_URL = "http://localhost:11434/api"
 EMBEDDING_MODEL = "nomic-embed-text"  # Changed to a proper embedding model

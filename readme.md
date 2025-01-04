@@ -1,4 +1,4 @@
-# MEDUSA Retaliation System
+# MEDUSA Retaliation-by-Profiling System
 
 ## Overview
 The MEDUSA Retaliation System is a comprehensive cybersecurity analysis tool designed to identify and assess potential security threats. It integrates network logs, AWS logs, and APT (Advanced Persistent Threat) databases to detect tactics, techniques, and procedures (TTPs) and associate them with known APT groups. The system generates detailed incident reports to assist threat analysts and incident response teams in understanding and mitigating security incidents.
