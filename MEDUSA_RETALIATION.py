@@ -398,7 +398,7 @@ if __name__ == "__main__":
 
     # Get matching APT groups
     # matching_groups = APTrag.find_apt_by_ttps(ttp_list)
-    matching_groups = APTrag.calculate_ttp_match(ttp_list)
+    matching_groups = APTrag.calculate_ttp_match(similar_docs)
     # matching_groups=calculate_ttp_match()
     print("***************************\n",json.dumps(matching_groups,indent=4),"\n***************************")
     end_time = time.time()
